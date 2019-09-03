@@ -1,0 +1,31 @@
+{
+  "name": "smart-tree",
+  "version": "1.0.3",
+  "private": false,
+  "license": "MIT",
+  "main": "dist/smart-tree.common.js",
+  "files": ["src", "dist", "packages"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gaonee/smart-tree-vue.git"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "build-npm": "vue-cli-service build --target lib --name smart-tree ./src/index.js"
+  },
+  "dependencies": {
+    "core-js": "^2.6.5",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-eslint": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue-template-compiler": "^2.6.10"
+  }
+}
