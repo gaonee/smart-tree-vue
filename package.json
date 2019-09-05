@@ -1,0 +1,26 @@
+{
+  "name": "smart-tree",
+  "version": "1.0.6",
+  "private": false,
+  "main": "dist/smart-tree.common.js",
+  "files": ["dist", "types"],
+  "typings": "types/index.d.ts",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "build-npm": "vue-cli-service build --target lib --name smart-tree ./src/index.ts"
+  },
+  "dependencies": {
+    "core-js": "^2.6.5",
+    "vue": "^2.6.10",
+    "vue-class-component": "^7.0.2",
+    "vue-property-decorator": "^8.1.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-typescript": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "typescript": "^3.4.3",
+    "vue-template-compiler": "^2.6.10"
+  }
+}
