@@ -2,9 +2,10 @@
     <div :class='[{"is-current": node.isCurrent}, "st-tree-node"]'
     :style='{"height": height + "px","top": top + "px"}'
     :draggable='tree.draggable'
+    v-stdrag='dragData'
     @dragstart.stop='handleDragStart'
     @dragover.stop='handleDragOver'
-    @dragend.stop='handleDragStop'
+    @dragend.stop='handleDragEnd'
     @click="handleClick">
         <div class='node-wrap' :style='{"line-height": height + "px", "margin-left": (node.level*indent) + "px"}'>
             <span :class='[{
@@ -21,6 +22,7 @@
 import { Component, Prop, Emit, Vue, Watch } from 'vue-property-decorator';
 import { NodeData, TreeProps } from './model/types';
 import Node from './model/node';
+import './model/drag'
 
 @Component({
     components: {
@@ -62,11 +64,37 @@ export default class TreeNode extends Vue {
         this.tree = this.$parent.$parent;
     }
 
-    private handleDragStart(e: any) {}
+    get dragData() {
+        const component: any = this.tree.dragProxy ? this.tree.dragProxy(this.data, this.node) : null;
 
-    private handleDragOver(e: any) {}
+        return component ? {
+            component: component,
+            offset: this.tree.dragOffset
+        } : null;
+    }
 
-    private handleDragStop() {}
+    private handleDragStart(e: any) {
+        if (this.tree.draggable === false) return;
+
+        if (this.tree.dragProxy) {
+            e.preventDefault();
+        }
+
+        this.tree.$emit('tree-node-drag-start', e, this);
+    }
+
+    private handleDragOver(e: any) {
+        if (this.tree.draggable === false) return;
+
+        this.tree.$emit('tree-node-drag-over', e, this);
+        e.preventDefault();
+    }
+
+    private handleDragEnd(e: any) {
+        if (this.tree.draggable === false) return;
+
+        this.tree.$emit('tree-node-drag-end', e, this);
+    }
 
     private handleClick() {
         const tree: any = this.tree;
