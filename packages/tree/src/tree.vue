@@ -27,6 +27,7 @@ import Store from './model/store';
 import Node from './model/node';
 import TreeNode from './tree-node.vue';
 import ScrollBar from '../../scroll-bar/index';
+import './model/drag'
 
 let defaultProps: TreeProps = {
     children: 'children',
@@ -52,6 +53,8 @@ export default class StTree extends Vue {
     @Prop({default: false}) readonly simple !: boolean
     @Prop({default: false}) readonly draggable !: boolean
     @Prop({default: null}) readonly filterNodeMethod !: Function
+    @Prop({default: null}) readonly dragProxy !: HTMLElement
+    @Prop({default: null}) readonly dragOffset !: any
     
     @Ref('view') readonly view !: HTMLElement
 
@@ -160,6 +163,8 @@ export default class StTree extends Vue {
     background: #ffffff;
 }
 .smart-tree .st-tree-empty-block {
+    position: absolute;
+    width: 100%;
     text-align: center;
 }
 </style>
