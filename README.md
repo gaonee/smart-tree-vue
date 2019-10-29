@@ -1,29 +1,20 @@
 # smart-tree
 
-## Project setup
+## License
+
+MIT License
+
+## Install
 ```
-npm install
+npm install -S smart-tree
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
+## Quick Start
+``` javascript
+import Vue from 'vue'
+import SmartTree from 'smart-tree'
+import 'smart-tree/dist/smart-tree.css'
+
+Vue.use(SmartTree)
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
