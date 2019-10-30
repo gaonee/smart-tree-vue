@@ -8,6 +8,8 @@ export interface NodeData {
 export interface TreeProps {
     label: string
     children: string
+    disabled?: boolean
+    isLeaf?: boolean
 }
 
 export interface StoreProps {
@@ -15,5 +17,7 @@ export interface StoreProps {
     nodeKey: string
     defaultExpandLevel: number
     simple: boolean
+    lazy: boolean
+    load: Function
     filterNodeMethod?: Function
 }

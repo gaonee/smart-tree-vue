@@ -14,7 +14,10 @@ import SmartTree from '../packages/tree/src/tree.vue';
 let treeData: any[] = [];
 for (let i = 0; i < 100; i++) {
   treeData.push({
-    label: 'item-' + i
+    label: 'item-' + i,
+    children: [{
+      label: 'item-' + i + '-1'
+    }]
   })
 }
 

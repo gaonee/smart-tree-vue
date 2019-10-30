@@ -53,8 +53,10 @@ export default class StTree extends Vue {
     @Prop({default: false}) readonly simple !: boolean
     @Prop({default: false}) readonly draggable !: boolean
     @Prop({default: null}) readonly filterNodeMethod !: Function
+    @Prop({default: null}) readonly load !: Function
     @Prop({default: null}) readonly dragProxy !: HTMLElement
     @Prop({default: null}) readonly dragOffset !: any
+    @Prop({default: false}) readonly lazy !: boolean
     
     @Ref('view') readonly view !: HTMLElement
 
@@ -69,7 +71,9 @@ export default class StTree extends Vue {
         nodeKey: this.nodeKye,
         defaultExpandLevel: this.defaultExpandLevel,
         // vue-property-decorator issue when used like: <st-tree simple></st-tree>
-        simple: this.simple !== false
+        simple: this.simple !== false,
+        lazy: this.lazy !== false,
+        load: this.load
     });
     private filterText: string = '';
 
