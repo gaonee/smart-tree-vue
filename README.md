@@ -39,20 +39,31 @@ Vue.use(SmartTree)
 ## Current Attributes & Functions
 
 ATTRIBUTES:
+
 data
+
 props
+
 deltaY
+
 defaultExpandLevel
+
 indent
+
 nodeHeight
+
 emptyText
+
 simple
 
 HOOKS:
+
 filterNodeMethod
 
 FUNCTIONS:
+
 filter(value: string): void
+
 updateSize(): void
 
 ## Usage
@@ -112,4 +123,5 @@ deltaY means mousewheel delta in vertical bar.
 ### <a id="nodeHeight"></a> `nodeHeight: number`
 
 nodeHeight表示每个树节点的高度。
+
 nodeHeight is heigth of tree node.
