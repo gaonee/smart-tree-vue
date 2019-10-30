@@ -98,6 +98,7 @@ const data = [
 ```
 
 相当于
+
 is equivalent to
 
 ``` javascript
