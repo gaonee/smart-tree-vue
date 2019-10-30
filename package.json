@@ -1,9 +1,12 @@
 {
   "name": "smart-tree",
-  "version": "1.0.6",
+  "version": "1.1.4",
   "private": false,
   "main": "dist/smart-tree.common.js",
-  "files": ["dist", "types"],
+  "files": [
+    "dist",
+    "types"
+  ],
   "typings": "types/index.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -22,5 +25,10 @@
     "@vue/cli-service": "^3.11.0",
     "typescript": "^3.4.3",
     "vue-template-compiler": "^2.6.10"
-  }
+  },
+  "keywords": [
+    "vue",
+    "smart-tree",
+    "tree"
+  ]
 }

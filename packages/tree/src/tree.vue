@@ -41,7 +41,7 @@ let defaultProps: TreeProps = {
     }
 })
 export default class StTree extends Vue {
-    name: string = 'StTree'
+    name: string = 'SmartTree'
     @Prop() readonly data !: NodeData[]
     @Prop({default: () => defaultProps}) readonly props !: TreeProps
     @Prop({default: 90}) readonly deltaY !: number

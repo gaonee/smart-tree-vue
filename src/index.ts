@@ -1,25 +1,24 @@
-import Vue, {PluginObject} from 'vue'
 import Tree from '../packages/tree/index'
+import ScrollBar from '../packages/scroll-bar/index'
 
-interface Plugin {
-    installed: boolean
-    version: string
-    install: Function
+const components = [
+    {name: 'SmartTree', component: Tree},
+    {name: 'SmartScrollbar', component: ScrollBar}
+]
+
+const install = function(Vue: any) {
+    components.forEach(c => {
+        Vue.component(c.name, c.component);
+    });
 }
 
-let myPlugin: PluginObject<any> = {
-    version: '1.0.3',
-    install: function(Vue: any) {
-        if (this.installed) return;
-        Vue.component(Tree.name, Tree)
-    }
-}
-
-// auto install
 if (typeof window !== 'undefined' && window.Vue) {
-	myPlugin.install((window as any).Vue);
+    install(window.Vue);
 }
 
-Vue.use(myPlugin)
-
-export default myPlugin;
+export default {
+    version: '1.1.3',
+    install,
+    Tree,
+    ScrollBar
+}
