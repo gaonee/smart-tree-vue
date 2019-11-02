@@ -65,15 +65,15 @@ filterNodeMethod
 filter(value: string): void
 
 updateSize(): void
-You can apply this function when tree container size changed.
 
 ## Usage
 
-There are several attributes:
+There are several attributes and functions:
 
 - [`simple`](#simple)
 - [`deltaY`](#deltaY)
 - [`nodeHeight`](#nodeHeight)
+- [`updateSize(): void`](#updateSize)
 
 ### <a id="simple"></a> `simple: boolean`
 
@@ -127,3 +127,9 @@ deltaY means mousewheel delta in vertical bar.
 nodeHeight表示每个树节点的高度。
 
 nodeHeight is heigth of tree node.
+
+### <a id="updateSize"></a> `updateSize (): void`
+
+当树的容器大小改变时，可以调用该方法更新显示区域内容。因为容器的大小改变通常是已知的行为，这里并不使用低效的事件监听方式。
+
+You can apply this function when tree container size changed.
