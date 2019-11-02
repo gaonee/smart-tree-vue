@@ -38,7 +38,7 @@ Vue.use(SmartTree)
 
 ## Current Attributes & Functions
 
-ATTRIBUTES:
+### ATTRIBUTES:
 
 data
 
@@ -56,11 +56,11 @@ emptyText
 
 simple
 
-HOOKS:
+### HOOKS:
 
 filterNodeMethod
 
-FUNCTIONS:
+### FUNCTIONS:
 
 filter(value: string): void
 
