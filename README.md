@@ -65,6 +65,7 @@ filterNodeMethod
 filter(value: string): void
 
 updateSize(): void
+You can apply this function when tree container size changed.
 
 ## Usage
 
