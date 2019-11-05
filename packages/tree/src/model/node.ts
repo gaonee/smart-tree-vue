@@ -11,6 +11,7 @@ export default class Node {
     public childNodes: Node[] = [];
     public store: Store;
     public visible: boolean = true;
+    public loaded: boolean = false;
 
     constructor(data: NodeData, store: Store, parent?: Node) {
         this.data = data;
@@ -25,12 +26,12 @@ export default class Node {
         if (!store.option.simple) {
             this.setData();
         }
+
+        this.updateLeafState();
     }
 
     private setData(): void {
         const children: NodeData[] = this.getChildren(); 
-
-        this.isLeaf = children.length <= 0;
 
         for (let i = 0,len = children.length; i < len; i++) {
             this.insertChild(children[i]);
@@ -91,6 +92,20 @@ export default class Node {
         })
     }
 
+    private updateLeafState() {
+        const lazy: boolean = this.store.option.lazy;
+        if (lazy === true && this.loaded !== true) {
+            this.isLeaf = !!this.store.getProps('isLeaf');
+            return;
+        }
+        const childNodes = this.childNodes;
+        if (!lazy || (lazy === true && this.loaded === true)) {
+            this.isLeaf = !childNodes || childNodes.length === 0;
+            return;
+        }
+        this.isLeaf = false;
+    }
+
     public filter(filter?: Function) {
         if (this.isLeaf) {
             this.visible = filter ? filter(this) : true;
@@ -132,9 +147,6 @@ export default class Node {
         const tempMap: any = {};
         // Object will sort by ASCII code automatically, so we add prefix to prevent the attributes order is changed.
         const prefix: string = 'temp_';
-
-        // root is not leaf
-        this.isLeaf = false;
 
         data.forEach((item: NodeData) => {
             if (!item.id) return;

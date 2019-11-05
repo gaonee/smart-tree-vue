@@ -3,7 +3,7 @@
         <div class="st-tree-empty-block" v-if="isEmpty">
             <span class="st-tree-empty-text">{{ emptyText }}</span>
         </div>
-        <scroll-bar @scroll-changed='handleScroll' :deltaY='deltaY'>
+        <scroll-bar @scroll-changed='handleScroll' :deltaY='deltaY' ref='scrollbar' >
             <div class='st-tree-wrap' :style='{"height": totalHeight + "px"}'>
                 <tree-node 
                     v-for='item in displayNodes'
@@ -59,6 +59,7 @@ export default class StTree extends Vue {
     @Prop({default: false}) readonly lazy !: boolean
     
     @Ref('view') readonly view !: HTMLElement
+    @Ref('scrollbar') readonly scrollBar !: any
 
     private scrollTop: number = 0;
     private nodeTop: number = 0;
@@ -70,7 +71,7 @@ export default class StTree extends Vue {
         props: this.props,
         nodeKey: this.nodeKye,
         defaultExpandLevel: this.defaultExpandLevel,
-        // vue-property-decorator issue when used like: <st-tree simple></st-tree>
+        // vue-property-decorator issue when used like: <smart-tree simple></smart-tree>
         simple: this.simple !== false,
         lazy: this.lazy !== false,
         load: this.load
@@ -151,6 +152,7 @@ export default class StTree extends Vue {
     public filter(value: string) {
         this.filterText = value;
         
+        this.scrollBar.scrollTo('top');
         this.store.filter(value ? this.filterCompare : undefined);
         this.updateExpandedNodes()
     }

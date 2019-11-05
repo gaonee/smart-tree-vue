@@ -2,12 +2,13 @@
   <div id="app">
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
-    <SmartTree :data='this.data'></SmartTree>
+    <span>Search: </span><input v-model='filterText' />
+    <SmartTree :data='this.data' :filter-node-method="filterNode" ref="tree"></SmartTree>
   </div>
 </template>
 
 <script lang="tsx">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Ref, Watch } from 'vue-property-decorator';
 import HelloWorld from './components/HelloWorld.vue';
 import SmartTree from '../packages/tree/src/tree.vue';
 
@@ -28,7 +29,20 @@ for (let i = 0; i < 100; i++) {
   },
 })
 export default class App extends Vue {
+  @Ref('tree') readonly tree !: any
+
+  @Watch('filterText')
+  filter(val: string) {
+    this.tree.filter(val);
+  }
+
   data: any[] = treeData
+  filterText: string = ''
+
+  private filterNode(value: string, data: any) {
+    if (!value) return true;
+    return data.label.indexOf(value) !== -1;
+  }
 }
 </script>
 

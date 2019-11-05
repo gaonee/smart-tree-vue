@@ -125,6 +125,20 @@ export default class StScrollbar extends Vue {
     scrollChanged() {
         return Math.abs(this.scrollTop);
     }
+
+    public scrollTo(pos: string | number) {
+        if (typeof pos === 'number') {
+            this.setScrollTop(pos);
+        } else if (typeof pos === 'string') {
+            switch(pos) {
+                case 'top':
+                    this.setScrollTop(0);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }
 </script>
 
