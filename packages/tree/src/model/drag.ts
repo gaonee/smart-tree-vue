@@ -19,6 +19,29 @@ function removeElement(el: HTMLElement) {
     return null;
 }
 
+function calculateOffst(el: any, offset: any) {
+    const rect: any = el.getBoundingClientRect();
+    if (offset.x == 'center') {
+        offset.x = rect.width / 2;
+    } else if (offset.x == 'left') {
+        offset.x = 0;
+    } else if (offset.x == 'right') {
+        offset.x = rect.width;
+    } else {
+        offset.x = parseInt(offset.x, 10) || 0;
+    }
+
+    if (offset.y == 'center') {
+        offset.y = rect.height / 2;
+    } else if (offset.y == 'top') {
+        offset.y = 0;
+    } else if (offset.y == 'bottom') {
+        offset.y = rect.height;
+    } else {
+        offset.y = parseInt(offset.y, 10) || 0;
+    }
+}
+
 
 Vue.directive('stdrag', (el, { value }) => {
     if (!value) return;
@@ -35,26 +58,7 @@ Vue.directive('stdrag', (el, { value }) => {
             wrap.appendChild(component.$el);
 
             if (offset) {
-                const rect: any = wrap.getBoundingClientRect();
-                if (offset.x == 'center') {
-                    offsetX = rect.width / 2;
-                } else if (offset.x == 'left') {
-                    offsetX = 0;
-                } else if (offset.x == 'right') {
-                    offsetX = rect.width;
-                } else {
-                    offsetX = parseInt(offset.x, 10) || 0;
-                }
-
-                if (offset.y == 'center') {
-                    offsetY = rect.height / 2;
-                } else if (offset.y == 'top') {
-                    offsetY = 0;
-                } else if (offset.y == 'bottom') {
-                    offsetY = rect.height;
-                } else {
-                    offsetY = parseInt(offset.y, 10) || 0;
-                }
+                calculateOffst(wrap, offset);
             }
 
             document.onmousemove = (e) => {

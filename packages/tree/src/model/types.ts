@@ -3,6 +3,7 @@ export interface NodeData {
     children?: NodeData[]
     id?: string
     pId?: string
+    isLeaf?: boolean
 }
 
 export interface TreeProps {

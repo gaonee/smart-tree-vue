@@ -3,7 +3,13 @@
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
     <span>Search: </span><input v-model='filterText' />
-    <SmartTree :data='this.data' :filter-node-method="filterNode" ref="tree"></SmartTree>
+    <SmartTree
+      :data='this.data'
+      :filter-node-method="filterNode"
+      :load='load'
+      lazy
+      draggable
+      ref="tree"></SmartTree>
   </div>
 </template>
 
@@ -11,14 +17,30 @@
 import { Component, Vue, Ref, Watch } from 'vue-property-decorator';
 import HelloWorld from './components/HelloWorld.vue';
 import SmartTree from '../packages/tree/src/tree.vue';
+import { NodeData } from '../packages/tree/src/model/types';
 
-let treeData: any[] = [];
+const treeData: any[] = [];
 for (let i = 0; i < 100; i++) {
   treeData.push({
     label: 'item-' + i,
-    children: [{
-      label: 'item-' + i + '-1'
-    }]
+    // children: [{
+    //   label: 'item-' + i + '-1'
+    // }]
+  })
+}
+
+const simpleData: any[] = [];
+for (let i = 0; i < 100; i++) {
+  simpleData.push({
+    id: i+1,
+    label: 'sitem-' + i
+  })
+}
+for (let i = 0; i < 100; i++) {
+  simpleData.push({
+    id: 101+i,
+    pId: i+1,
+    label: 'sitem-' + i + '-1'
   })
 }
 
@@ -36,12 +58,17 @@ export default class App extends Vue {
     this.tree.filter(val);
   }
 
-  data: any[] = treeData
-  filterText: string = ''
+  private data: any[] = treeData
+  private filterText: string = ''
 
   private filterNode(value: string, data: any) {
     if (!value) return true;
     return data.label.indexOf(value) !== -1;
+  }
+
+  private load(node: any, resolve: Function) {
+    const data: NodeData[] = [];
+    resolve(treeData)
   }
 }
 </script>

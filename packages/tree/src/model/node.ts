@@ -18,20 +18,19 @@ export default class Node {
         this.store = store;
         this.parent = parent;
 
-        if (parent) {
-            this.level = parent.level + 1;
-            this.expanded = this.level <= this.store.option.defaultExpandLevel;
-        }
-
         if (!store.option.simple) {
-            this.setData();
-        }
+            if (this.store.option.lazy && this.parent) {
+                this.expanded = this.data.isLeaf == undefined ? true : this.data.isLeaf;
+            } else {
+                this.setData();
+            }
 
-        this.updateLeafState();
+            this.updateLeafState();
+        }
     }
 
     private setData(): void {
-        const children: NodeData[] = this.getChildren(); 
+        const children: NodeData[] = this.getChildren();
 
         for (let i = 0,len = children.length; i < len; i++) {
             this.insertChild(children[i]);
@@ -43,6 +42,7 @@ export default class Node {
 
         const node: Node = new Node(child, this.store, this);
         node.level = this.level + 1;
+        node.expanded = node.level <= this.store.option.defaultExpandLevel;
 
         this.childNodes.push(node);
     }
@@ -95,7 +95,7 @@ export default class Node {
     private updateLeafState() {
         const lazy: boolean = this.store.option.lazy;
         if (lazy === true && this.loaded !== true) {
-            this.isLeaf = !!this.store.getProps('isLeaf');
+            this.isLeaf = this.data.isLeaf == undefined ? true : this.data.isLeaf;
             return;
         }
         const childNodes = this.childNodes;
@@ -104,6 +104,25 @@ export default class Node {
             return;
         }
         this.isLeaf = false;
+    }
+
+    private loadData(callback: Function) {
+        if (this.store.option.lazy && this.store.option.load && !this.loaded) {
+            const resolve = (children: NodeData[]) => {
+                this.loaded = true;
+                this.childNodes = [];
+
+                if (callback) {
+                    callback.call(this, children);
+                }
+            }
+
+            this.store.option.load(this, resolve);
+        } else {
+            if (callback) {
+                callback.call(this);
+            }
+        }
     }
 
     public filter(filter?: Function) {
@@ -166,5 +185,19 @@ export default class Node {
         })
 
         this.formatSimpleData(this);
+    }
+
+    public collapse() {
+        this.expanded = false;
+    }
+
+    public expand() {
+        this.expanded = true;
+
+        if (this.store.option.lazy) {
+            this.loadData((data: NodeData[]) => {
+                console.log(data)
+            })
+        }
     }
 }

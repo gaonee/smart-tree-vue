@@ -103,10 +103,10 @@ export default class TreeNode extends Vue {
 
         if (this.node.expanded) {
             tree.$emit('node-collapse', this.node.data, this.node, this);
-            this.node.expanded = false;
+            this.node.collapse();
         } else {
-            this.node.expanded = true;
-            tree.$emit('node-collapse', this.node.data, this.node, this);
+            this.node.expand();
+            tree.$emit('node-expand', this.node.data, this.node, this);
         }
 
         /* When the tree scrolling, attribute will update, and tree node-switch animation
